@@ -1,0 +1,36 @@
+TP1 - Instructions d'Execution
+==================================
+
+random_state=42 partout 
+preprocessing.ipynb genere une seule fois train.csv/val.csv/test.csv
+(dossier ./data/)  les autres notebooks les rechargent tels quels pour garantir une comparaison equitable entre approches.
+
+2. INSTALLATION
+-------------------
+pip install -r requirements.txt
+GPU recommande pour part_b (local 8 Go VRAM dans notre cas).
+
+download WELFake_Dataset and place it in root
+
+3. ORDRE D'EXECUTION
+------------------------
+1) preprocessing.ipynb  -> nettoie (doublons, valeurs manquantes) + split
+                            70/15/15 -> data/train.csv, val.csv, test.csv
+2) part_a.ipynb          -> TF-IDF + LogisticRegression 
+3) part_b.ipynb          -> DistilBERT gele + LogisticRegression 
+4) llm.ipynb             -> LLM promptee (bonus, voir setup ci-dessous) 
+
+4. SETUP LLM (llm.ipynb)
+-----------------------------
+Deux options utilisees : Groq (gratuit) 
+
+Groq :
+  1. Cle gratuite : https://console.groq.com/keys
+  2. GROQ_API_KEY="votre_cle"
+  3. Verifier les modeles disponibles sur votre compte avant de lancer
+     (les noms changent regulierement) :
+       from groq import Groq
+       import os
+       client = Groq(api_key=os.environ["GROQ_API_KEY"])
+       for m in client.models.list().data: print(m.id)
+  4. Modele recommande : openai/gpt-oss-20b
